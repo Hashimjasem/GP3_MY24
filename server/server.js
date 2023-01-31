@@ -3,7 +3,6 @@ const dotenv = require('dotenv').config()
 const port = process.env.PORT || 5000
 const mongoose = require('mongoose')
 
-const timeBlockRoutes = require('./routes/timeBlock')
 const userRoutes = require('./routes/userRoutes')
 
 //settup express app
@@ -18,7 +17,8 @@ app.use((req, res, next) => {
 })
 
 //routes
-app.use('/api/timeblocks', timeBlockRoutes)
+// app.use('/api/timeblocks', timeBlockRoutes)
+
 app.use('/api/users', userRoutes)
 
 //connect to db
