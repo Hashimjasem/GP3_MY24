@@ -2,8 +2,12 @@ const timeblockSchema = require('../models/timeblockModel')
 const { Schema, model } = require('mongoose')
 
 const datesSchema = new Schema({
-    date: {
-        type: String,
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    when: {
+        type: Number,
         required: true
     },
     journal: {
@@ -16,7 +20,7 @@ const datesSchema = new Schema({
             ref: 'timeblock'
         }
     ]
-}, {timestames:  true})
+})
 
 const Date = model('date', datesSchema);
 

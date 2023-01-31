@@ -1,43 +1,54 @@
-const express = require('express')
-const User = require('../models/userModel')
+const express = require("express");
+const {User, Date, Timeblock} = require("../models/index.js");
 
-const router = express.Router()
+const router = express.Router();
 
-//gets all timeblocks
-router.get('/', (req, res) => {
-    User.find()
-    .then((users) => res.json(users))
-    .catch((err) => res.status(500).json(err));
+//what do i need to do
 
-    // res.json({mssg: 'GET all time blocks'})
+//a way to sign up and create a user
+//post request
+router.post("/signup", async (req, res) => {
+  try {
+    const createUser = await User.create({
+      username: req.body.username,
+      fname: req.body.fname,
+      sname: req.body.sname,
+      email: req.body.email,
+      password: req.body.password
+    });
+    console.log(req.body.username)
+    return res.status(200).json('user successfully created')
+  } catch (err) {
+    return console.log(err)
+  }
+});
+
+//a way for a user to sign in and set the routes for that specific user
+//get request
+router.get("/:username");
+
+// a way to retrieve the data for that user
+
+
+
+
+
+// a way to create data specific for that user
+router.post('/createlog/:username', async (req,res) => {
+    try {
+        const createlog = await Date.create({
+            owner: req.params.username,
+            when: req.body.date,
+            journal: req.body.journal,
+        }) 
+        const addtoLogs = await User.findByIdAndUpdate(req.params.id, {
+            logs: createlog
+        });
+        console.log(req.params.username)
+        return res.status(200).json('log created successfully')
+    } catch (err) {
+        return console.log(err)
+    }
 })
 
-//gets one timeblock
-router.get('/:id', (req, res) => {
-    // res.json({mssg: 'GET one time block'})
-})
-
-
-//create a user
-router.post('/', (req, res) => {
-    
-    res.json({mssg: 'post new user'})
-})
-
-
-
-//DELETE one timeblock
-router.delete('/:id', (req, res) => {
-    res.json({mssg: 'delete timeblock'})
-})
-
-//UPDATE one timeblock
-router.delete('/:id', (req, res) => {
-    res.json({mssg: 'update timeblock'})
-})
-
-
-
-
-
-module.exports = router
+module.exports = router;

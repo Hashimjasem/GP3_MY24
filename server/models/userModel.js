@@ -2,6 +2,10 @@ const { Schema, model } = require('mongoose')
 const datesSchema = require('./datesModel')
 
 const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    },
     fname: {
         type: String,
         required: true
@@ -24,8 +28,7 @@ const userSchema = new Schema({
             ref: 'date'
         }
     ]
-}, 
-{timestames:  true});
+});
 
 const User = model('user', userSchema);
 

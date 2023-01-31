@@ -51,6 +51,7 @@ User.create({
 });
 /*
 {
+    username: hashim.j
     fname: 'Hashim',
     sname: 'Jasem',
     email: 'j_hashim1305@outlook.com',
