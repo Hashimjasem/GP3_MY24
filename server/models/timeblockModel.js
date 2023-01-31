@@ -1,6 +1,4 @@
-const mongoose = require('mongoose')
-
-const Schema = mongoose.Schema
+const { Schema, model } = require('mongoose')
 
 const timeBlockSchema = new Schema({
     title: {
@@ -11,12 +9,12 @@ const timeBlockSchema = new Schema({
         type: String,
         required: false
     },
-    TimeS: {
-        type: Date,
+    timeS: {
+        type: String,
         required: true
     },
-    TimeE: {
-        type: Date,
+    timeE: {
+        type: String,
         required: true
     },
     notes: {

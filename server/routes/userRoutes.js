@@ -1,15 +1,20 @@
 const express = require('express')
+const User = require('../models/userModel')
 
 const router = express.Router()
 
 //gets all timeblocks
 router.get('/', (req, res) => {
-    res.json({mssg: 'GET all time blocks'})
+    User.find()
+    .then((users) => res.json(users))
+    .catch((err) => res.status(500).json(err));
+
+    // res.json({mssg: 'GET all time blocks'})
 })
 
 //gets one timeblock
 router.get('/:id', (req, res) => {
-    res.json({mssg: 'GET one time block'})
+    // res.json({mssg: 'GET one time block'})
 })
 
 
