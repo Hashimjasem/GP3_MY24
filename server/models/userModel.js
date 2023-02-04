@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const datesSchema = require('./datesModel')
+const daySchema = require('./dayModel')
 
 const userSchema = new Schema({
     username: {
@@ -22,10 +22,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    logs: [
+    days: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'date'
+            ref: 'day'
         }
     ]
 });

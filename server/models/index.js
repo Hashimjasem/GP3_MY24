@@ -1,5 +1,5 @@
 const User = require('./userModel');
-const timeBlock = require('./timeblockModel');
-const Date = require('./datesModel');
+const TimeBlock = require('./timeblockModel');
+const Day = require('./dayModel');
 
-module.exports = {User, timeBlock, Date};
+module.exports = {User, TimeBlock, Day};

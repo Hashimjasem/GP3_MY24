@@ -1,6 +1,10 @@
 const { Schema, model } = require('mongoose')
 
 const timeBlockSchema = new Schema({
+    belongsTo: {
+        type: Schema.Types.ObjectId,
+        ref: 'day'      
+    },
     title: {
         type: String,
         required: true
