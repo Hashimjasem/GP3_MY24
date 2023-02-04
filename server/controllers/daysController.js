@@ -15,7 +15,7 @@ getAllDays = async (req, res) => {
 
 getDay = async (req, res) => {
   try {
-    const day = await Day.findOne({
+    const day = await Day.find({
       date_id: req.params.date_id,
     }).populate("timeblocks");
     res.status(200).json({ day });
