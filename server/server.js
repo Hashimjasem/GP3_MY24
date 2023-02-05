@@ -34,20 +34,6 @@ function validateUser(req, res, next) {
   );
 }
 
-//error handling
-app.use(function (req, res, next) {
-  let err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
-
-app.use(function (err, req, res, next) {
-  console.log(err);
-
-  if (err.status === 404) res.status(404).json({ message: "Not found" });
-  else res.status(500).json({ message: "Something looks wrong :( !!!" });
-});
-
 
 app.set("secretKey", "nodeRestApi"); // jwt secret token
 
