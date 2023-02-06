@@ -23,9 +23,10 @@ function App() {
             <Route path='/history' element={<History />} />
             <Route path='/setup' element={<Setup />} />
           </Routes>
-          <ToastContainer/>
+          
         </div>
       </Router>
+      <ToastContainer/>
     </>
   );
 }

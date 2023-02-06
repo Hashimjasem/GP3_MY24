@@ -1,28 +1,21 @@
 const { Schema, model } = require('mongoose');
 const daySchema = require('./dayModel');
-bcrypt = require('bcrypt');
+bcrypt = require('bcryptjs');
 const saltRounds = 10; 
 
 const userSchema = new Schema({
-    username: {
+    name: {
         type: String,
-        required: true
-    },
-    fname: {
-        type: String,
-        required: true
-    },
-    sname: {
-        type: String,
-        required: true
+        required: [true, 'please add a name']
     },
     email: {
         type: String,
-        required: true
+        required: [true, 'please add an email'],
+        unique: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'please add a pasword']
     },
     days: [
         {

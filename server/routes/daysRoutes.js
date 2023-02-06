@@ -1,16 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {  getAllDays, getDay, createTimeblock, deleteTimeblock, addTimeblockNotes, addjournalentry, editJournal} = require("../controllers/daysController");
+const { protect } = require("../middleware/authMiddleware");
 
-router.get("/:_id/logs", getAllDays);
-router.get("/:_id/dashboard/:date_id", getDay);
 
-router.post('/:_id/setup', createTimeblock)
-router.delete('/:_id/setup', deleteTimeblock)
-router.post('/:_id/dashboard/:title', addTimeblockNotes);
-router.post('/:_id/dashboard/journal', addjournalentry)
-router.put('/:_id/dashboard/journal', editJournal);
-
+router.route("/setup").post(protect, createTimeblock)
+router.route("/dashboard").post(protect, addTimeblockNotes, addjournalentry, editJournal).delete(protect, deleteTimeblock).get(protect, getDay)
+router.get("/history", protect, getAllDays);
 
 module.exports = router;
 

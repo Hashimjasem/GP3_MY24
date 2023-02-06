@@ -1,63 +1,34 @@
-const express = require("express");
-const dotenv = require("dotenv").config();
+const path = require('path');
+const express = require('express');
+const colors = require('colors');
+const dotenv = require('dotenv').config();
+const { errorHandler } = require('./middleware/errorMiddleware');
+const connectDB = require('./config/connection');
 const port = process.env.PORT || 5000;
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 
-const userRoutes = require("./routes/userRoutes");
-const daysRoutes = require("./routes/daysRoutes");
+connectDB();
 
-//settup express app
 const app = express();
 
-// middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+app.use('/api/timeblocks', require('./routes/daysRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
-function validateUser(req, res, next) {
-  jwt.verify(
-    req.headers["x-access-token"],
-    req.app.get("secretKey"),
-    function (err, decoded) {
-      if (err) {
-        res.json({ status: "error", message: err.message, data: null });
-      } else {
-        // add user id to request
-        req.body.userId = decoded.id;
-        next();
-      }
-    }
+// Serve frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+    )
   );
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'));
 }
 
+app.use(errorHandler);
 
-app.set("secretKey", "nodeRestApi"); // jwt secret token
-
-//public route
-app.use("/api/users", userRoutes);
-
-//private routes
-app.use("/api/users", validateUser, daysRoutes);
-
-// app.get('/favicon.ico', function(req, res) {
-//     res.sendStatus(204);
-// });
-
-//connect to db
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    //listen for requests
-    app.listen(port, () =>
-      console.log(
-        `Connected to db, Server listening at http://localhost:${port}`
-      )
-    );
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+app.listen(port, () => console.log(`Server started on port ${port}`));

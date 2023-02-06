@@ -1,10 +1,11 @@
 const User = require("../models/userModel");
 const Day = require("../models/dayModel");
 const Timeblock = require("../models/timeblockModel");
+const asyncHandler = require('express-async-handler')
 
 getAllDays = async (req, res) => {
   try {
-    const days = await Day.find({ owner: req.params._id }).populate(
+    const days = await Day.find({ owner: req.user._id }).populate(
       "timeblocks"
     );
     res.status(200).json({ days });
@@ -13,7 +14,7 @@ getAllDays = async (req, res) => {
   }
 };
 
-getDay = async (req, res) => {
+getDay = asyncHandler(async (req, res) => {
   try {
     const day = await Day.find({
       date_id: req.params.date_id,
@@ -22,9 +23,9 @@ getDay = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
 
-addjournalentry = async (req, res) => {
+addjournalentry = asyncHandler(async (req, res) => {
   try {
     const day = await Day.findOne({
       date: req.body.date,
@@ -50,9 +51,9 @@ addjournalentry = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
 
-editJournal = async (req, res) => {
+editJournal = asyncHandler(async (req, res) => {
   try {
     const day = await Day.findOne({
       date: req.body.date,
@@ -64,10 +65,10 @@ editJournal = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
 
 // createTimeblock Controller
-createTimeblock = async (req, res) => {
+createTimeblock = asyncHandler(async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params._id });
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -107,10 +108,10 @@ createTimeblock = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+});
 
 // addTimeblockNotes Controller
-addTimeblockNotes = async (req, res) => {
+addTimeblockNotes = asyncHandler(async (req, res) => {
   try {
     const timeblock = await Timeblock.findOne({ title: req.params.title });
     if (!timeblock)
@@ -123,10 +124,10 @@ addTimeblockNotes = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+});
 
 // deleteTimeblock Controller
-deleteTimeblock = async (req, res) => {
+deleteTimeblock = asyncHandler(async (req, res) => {
   try {
     const timeblock = await Timeblock.findOne({ title: req.params.title });
     if (!timeblock)
@@ -138,7 +139,7 @@ deleteTimeblock = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+});
 
 module.exports = {
   getAllDays,

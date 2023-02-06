@@ -4,6 +4,7 @@ const { Schema, model } = require('mongoose')
 const daySchema = new Schema({
     owner: {
             type: Schema.Types.ObjectId,
+            required: true,
             ref: 'user'
     },
     date: {
