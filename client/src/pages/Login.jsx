@@ -8,11 +8,8 @@ import Spinner from "../components/Spinner";
 
 function Login() {
   const [formData, setFormData] = useState({
-    fname: "",
-    sname: "",
     email: "",
     password: "",
-    password2: "",
   });
 
   const { email, password} = formData;
@@ -43,7 +40,7 @@ function Login() {
       ...prevState,
       [e.target.name]: e.target.value,
     }))
-  };
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -67,7 +64,7 @@ function Login() {
           <FaSignInAlt />
           Login
         </h1>
-        <p>Sign in to Your Accoun</p>
+        <p>Sign in to Your Account</p>
       </section>
 
       <section className="form">
@@ -75,7 +72,7 @@ function Login() {
           
           <div className="form-group">
             <input
-              type="text"
+              type="email"
               className="form-control"
               id="email"
               name="email"
@@ -86,7 +83,7 @@ function Login() {
           </div>
           <div className="form-group">
             <input
-              type="text"
+              type="pasword"
               className="form-control"
               id="password"
               name="password"
@@ -96,7 +93,7 @@ function Login() {
             />
           </div>
           <div className="form-group">
-            <button type="submit">Submit</button>
+            <button type="submit"className="btn btn-block">Submit</button>
           </div>
         </form>
       </section>

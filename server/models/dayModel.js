@@ -5,7 +5,7 @@ const daySchema = new Schema({
     owner: {
             type: Schema.Types.ObjectId,
             required: true,
-            ref: 'user'
+            ref: 'User'
     },
     date: {
         type: String,
