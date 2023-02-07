@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import TimeblockForm from "../components/timeblockForm";
+import TimeBlockForm from "../components/timeblockForm";
 
 function Setup() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function Setup() {
     
     
   </section>
-  <TimeblockForm/>
+  <TimeBlockForm/>
   </>
   )
 }

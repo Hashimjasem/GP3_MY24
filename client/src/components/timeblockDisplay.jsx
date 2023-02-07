@@ -1,14 +1,27 @@
-import { useDispatch } from 'react-redux'
-import deleteTimeblock from '../features/timeblocks/timeblockService'
+import React from 'react';
 
-function TimeblockDisplay({ timeblock }) {
-  const dispatch = useDispatch()
+const TimeBlock = ({ title, description, startTime, endTime }) => (
+  <div>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <p>Start Time: {startTime}</p>
+    <p>End Time: {endTime}</p>
+  </div>
+);
 
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const TimeBlockList = ({ timeBlocks }) => (
+  <div>
+    {timeBlocks.map((timeBlock, index) => (
+      <TimeBlock
+        key={index}
+        title={timeBlock.title}
+        description={timeBlock.description}
+        startTime={timeBlock.startTime}
+        endTime={timeBlock.endTime}
+      />
+    ))}
+  </div>
+);
 
-export default TimeblockDisplay
+export default TimeBlockList;
+

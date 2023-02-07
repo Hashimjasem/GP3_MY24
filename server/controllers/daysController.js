@@ -3,7 +3,7 @@ const Day = require("../models/dayModel");
 const Timeblock = require("../models/timeblockModel");
 const asyncHandler = require('express-async-handler')
 
-getAllDays = async (req, res) => {
+const getAllDays = async (req, res) => {
   try {
     const days = await Day.find({ owner: req.user._id }).populate(
       "timeblocks"
@@ -14,7 +14,7 @@ getAllDays = async (req, res) => {
   }
 };
 
-getDay = asyncHandler(async (req, res) => {
+const getDay = asyncHandler(async (req, res) => {
   try {
     const day = await Day.find({
       date_id: req.params.date_id,
@@ -25,7 +25,7 @@ getDay = asyncHandler(async (req, res) => {
   }
 });
 
-addjournalentry = asyncHandler(async (req, res) => {
+const addjournalentry = asyncHandler(async (req, res) => {
   try {
     const day = await Day.findOne({
       date: req.body.date,
@@ -68,7 +68,7 @@ editJournal = asyncHandler(async (req, res) => {
 });
 
 // createTimeblock Controller
-createTimeblock = asyncHandler(async (req, res) => {
+const createTimeblock = asyncHandler(async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params._id });
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -111,7 +111,7 @@ createTimeblock = asyncHandler(async (req, res) => {
 });
 
 // addTimeblockNotes Controller
-addTimeblockNotes = asyncHandler(async (req, res) => {
+const addTimeblockNotes = asyncHandler(async (req, res) => {
   try {
     const timeblock = await Timeblock.findOne({ title: req.params.title });
     if (!timeblock)
@@ -127,7 +127,7 @@ addTimeblockNotes = asyncHandler(async (req, res) => {
 });
 
 // deleteTimeblock Controller
-deleteTimeblock = asyncHandler(async (req, res) => {
+const deleteTimeblock = asyncHandler(async (req, res) => {
   try {
     const timeblock = await Timeblock.findOne({ title: req.params.title });
     if (!timeblock)
