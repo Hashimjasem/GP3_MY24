@@ -19,6 +19,16 @@ function Header() {
         <Link to="/">MY:24</Link>
       </div>
       <ul>
+        <li>
+          <Link to="/history">
+            <FaUser /> history
+          </Link>
+        </li>
+        <li>
+          <Link to="/create">
+            <FaUser /> setup timeblocks
+          </Link>
+        </li>
         {user ? (
           <li>
             <button className="btn" onClick={onLogout}>
@@ -39,16 +49,6 @@ function Header() {
             </li>
           </>
         )}
-        <li>
-          <Link to="/history">
-            <FaUser /> history
-          </Link>
-        </li>
-        <li>
-          <Link to="/setup">
-            <FaUser /> setup timeblocks
-          </Link>
-        </li>
       </ul>
     </header>
   );
