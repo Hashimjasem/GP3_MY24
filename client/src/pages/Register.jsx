@@ -1,132 +1,73 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { FaUser } from "react-icons/fa";
-import { register, reset } from "../features/auth/authSlice";
-import Spinner from "../components/Spinner";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import Auth from '../utils/auth';
+import { ADD_USER } from '../utils/mutations';
 
-function Register() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-  });
+function Signup(props) {
+  const [formState, setFormState] = useState({ email: '', password: '', fullName: '' });
+  const [addUser] = useMutation(ADD_USER);
 
-  const { name, email, password, password2 } = formData;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { user, isLoading, isError, isSuccess, message 
-  } = useSelector(
-    (state) => state.auth
-  );
-
-  useEffect(() => {
-    if(isError) {
-      toast.error(message)
-    }
-
-    if(isSuccess || user) {
-      navigate('/')
-    }
-
-    dispatch(reset())
-
-  }, [user, isError, isSuccess, message, navigate, dispatch])
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const mutationResponse = await addUser({
+      variables: {
+        email: formState.email,
+        password: formState.password,
+        fullName: formState.fullName,
+      },
+    });
+    const token = mutationResponse.data.addUser.token;
+    Auth.login(token);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (password !== password2) {
-      toast.error("Passwords do not match");
-    } else {
-      const userData = {
-        name,
-        email,
-        password,
-      }
-
-      dispatch(register(userData))
-    }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
-
-  if(isLoading) {
-    return <Spinner/>
-  }
 
   return (
-    <>
-      <section className="heading">
-        <h1>
-          <FaUser />
-          Register
-        </h1>
-        <p>Create Your Account</p>
-      </section>
+    <div className="container my-1 nes-container is-dark with-title">
 
-      <section className="form">
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={name}
-              placeholder="Name"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="email"
-              name="email"
-              value={email}
-              placeholder="Email"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="password2"
-              name="password2"
-              value={password2}
-              placeholder="Confirm Password"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      </section>
-    </>
+<p className="title" >Create Your Account</p>
+      <form onSubmit={handleFormSubmit}>
+        <div className="flex-row space-between my-2">
+          <input
+            placeholder="Full Name"
+            name="fullName"
+            type="fullName"
+            id="fullName"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+          <input
+            placeholder="youremail@test.com"
+            name="email"
+            type="email"
+            id="email"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row space-between my-2">
+          <input
+            placeholder="password"
+            name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row flex-end">
+          <button type="submit" className='nes-btn btn'>Submit</button>
+        </div>
+        <Link to="/login" className='nes-btn btn'>I already have an Account</Link>
+      </form>
+    </div>
   );
 }
 
-export default Register;
+export default Signup;

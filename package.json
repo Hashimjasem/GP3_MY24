@@ -1,28 +1,19 @@
 {
-  "name": "my-24",
+  "name": "mern-shopping",
   "version": "1.0.0",
-  "description": "a daily planner that allows the user to timeblock and plan their days, whilst also providing a means to jounal and document their days",
-  "main": "server.js",
+  "description": "",
+  "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "start": "node server --ignore client",
+    "dev": "concurrently \"cd server && npm run server\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
   },
-  "author": "Hashim Jasem",
+  "keywords": [],
+  "author": "",
   "license": "MIT",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
-    "dotenv": "^15.0.0",
-    "express": "^4.17.2",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.9"
-  },
   "devDependencies": {
-    "concurrently": "^7.0.0",
-    "nodemon": "^2.0.15"
+    "concurrently": "^5.1.0"
   }
 }

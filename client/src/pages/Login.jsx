@@ -1,74 +1,41 @@
-import { useState, useEffect } from "react";
-import { FaSignInAlt } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { login, reset } from "../features/auth/authSlice";
-import Spinner from "../components/Spinner";
+import React, { useState } from 'react';
+import {useMutation} from '@apollo/client'
+import { Link } from 'react-router-dom';
+import { LOGIN } from '../utils/mutations';
+import Auth from '../utils/auth';
+import "nes.css/css/nes.css";
 
-function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+function Login(props) {
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN);
 
-  const { email, password} = formData;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { user, isLoading, isError, isSuccess, message 
-  } = useSelector(
-    (state) => state.auth
-  );
-
-  useEffect(() => {
-    if(isError) {
-      toast.error(message)
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const mutationResponse = await login({
+        variables: { email: formState.email, password: formState.password },
+      });
+      const token = mutationResponse.data.login.token;
+      Auth.login(token);
+    } catch (e) {
+      console.log(e);
     }
-
-    if(isSuccess || user) {
-      navigate('/')
-    }
-
-    dispatch(reset())
-
-  }, [user, isError, isSuccess, message, navigate, dispatch])
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    const userData = {
-      email,
-      password,
-    }
-
-    dispatch(login(userData))
   };
 
-  if(isLoading) {
-    return <Spinner/>
-  }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          <FaSignInAlt />
-          Login
-        </h1>
-        <p>Sign in to Your Account</p>
-      </section>
+      <section className="nes-container is-dark with-title container">
+        <p className="title" >Sign in to Your Account</p>
 
-      <section className="form">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleFormSubmit}>
           
           <div className="form-group">
             <input
@@ -76,9 +43,8 @@ function Login() {
               className="form-control"
               id="email"
               name="email"
-              value={email}
               placeholder="Email"
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group">
@@ -87,15 +53,20 @@ function Login() {
               className="form-control"
               id="password"
               name="password"
-              value={password}
               placeholder="Password"
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
+          {error ? (
+          <div>
+            <p className="nes-text is-error">The provided credentials are incorrect</p>
+          </div>
+        ) : null}
           <div className="form-group">
-            <button type="submit"className="btn btn-block">Submit</button>
+            <button type="submit"className="nes-btn btn">Submit</button>
           </div>
         </form>
+        <Link to="/register" className='nes-btn btn'>Dont have an Account? Signup Here</Link>
       </section>
     </>
   );

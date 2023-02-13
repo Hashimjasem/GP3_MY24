@@ -1,9 +1,13 @@
 const { Schema, model } = require('mongoose')
 
 const timeBlockSchema = new Schema({
-    belongsTo: {
+    owner: {
         type: Schema.Types.ObjectId,
-        ref: 'day'      
+        ref: 'user'      
+    },
+    date_id: {
+        type: String,
+        required: false
     },
     title: {
         type: String,
@@ -13,11 +17,11 @@ const timeBlockSchema = new Schema({
         type: String,
         required: false
     },
-    timeS: {
+    startTime: {
         type: String,
         required: true
     },
-    timeE: {
+    endTime: {
         type: String,
         required: true
     },
@@ -25,7 +29,7 @@ const timeBlockSchema = new Schema({
         type: String,
         required: false
     }
-}, {timestames:  true})
+})
 
 const Timeblock = model('timeblock', timeBlockSchema);
 

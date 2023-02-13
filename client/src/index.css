@@ -1,21 +1,12 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Press Start 2P', cursive;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  height: 100vh;
-}
-
-a {
-  text-decoration: none;
-  color: #000;
-}
 
 p {
   line-height: 1.7;
@@ -38,7 +29,7 @@ h3 {
 
 .container {
   width: 100%;
-  max-width: 960px;
+  height: 80vh;
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
@@ -52,6 +43,11 @@ h3 {
   border-bottom: 1px solid #e6e6e6;
   margin-bottom: 60px;
 }
+
+.logo {
+  font-size: x-large;
+}
+
 
 .header ul {
   display: flex;
@@ -86,66 +82,6 @@ h3 {
 .heading p {
   color: #828282;
 }
-.form,
-.content {
-  width: 70%;
-  margin: 0 auto;
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #e6e6e6;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-family: inherit;
-}
-
-.form-group label {
-  text-align: left;
-  display: block;
-  margin: 0 0 5px 3px;
-}
-
-.btn {
-  padding: 10px 20px;
-  border: 1px solid #000;
-  border-radius: 5px;
-  background: #000;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: center;
-  appearance: button;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn svg {
-  margin-right: 8px;
-}
-
-.btn-reverse {
-  background: #fff;
-  color: #000;
-}
-
-.btn-block {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.btn:hover {
-  transform: scale(0.98);
-}
 
 .loadingSpinnerContainer {
   position: fixed;
@@ -178,7 +114,7 @@ h3 {
   }
 }
 
-@media (max-width: 600px) {
+@media (min-width: 600px) {
   .form {
     width: 90%;
   }
@@ -192,3 +128,52 @@ h3 {
   }
 }
 
+.form,
+.content {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+}
+
+
+.btn-reverse {
+  background: #fff;
+  color: #000;
+}
+
+.btn:hover {
+  transform: scale(0.98);
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+.dashboard{
+  height: 80vh;
+  display: flex;
+}
+.dash-component{
+  width: 100%;
+  display: inline-block;
+  height:100%;
+  margin: 20px;
+}

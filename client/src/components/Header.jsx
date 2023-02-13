@@ -1,55 +1,62 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
+import React from "react";
+import Auth from "../utils/auth";
+import { Link } from "react-router-dom";
+import "nes.css/css/nes.css";
 
 function Header() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-
-  const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate('/')
-  }
-  return (
-    <header className="header">
-      <div className="logo">
-        <Link to="/">MY:24</Link>
-      </div>
-      <ul>
-        <li>
-          <Link to="/history">
-            <FaUser /> history
-          </Link>
-        </li>
-        <li>
-          <Link to="/create">
-            <FaUser /> setup timeblocks
-          </Link>
-        </li>
-        {user ? (
-          <li>
-            <button className="btn" onClick={onLogout}>
-              <FaSignInAlt /> Logout
-            </button>
-          </li>
-        ) : (
+  function showNavigation() {
+    if (Auth.loggedIn()) {
+      return (
+        <ul>
           <>
             <li>
-              <Link to="/login">
-                <FaSignInAlt /> Login
+              <button type="button" className="nes-btn is-error" href="/" onClick={() => Auth.logout()}>
+              Logout
+              </button>
+            </li>
+            <li>
+              <Link type="button" className="nes-btn is-warning">
+                history
               </Link>
             </li>
             <li>
-              <Link to="/register">
-                <FaUser /> Register
+              <Link type="button" className="nes-btn is-warning" to="/create">
+                Plan a Day
               </Link>
             </li>
           </>
-        )}
       </ul>
+      );
+    } else {
+      return (
+        <>
+        <li>
+          <Link type="button" to="/login" className="nes-btn is-primary">
+            {" "}
+            Login
+          </Link>
+        </li>
+        <li>
+          <Link type="button" to="/register" className="nes-btn is-primary">
+            {" "}
+            Register
+          </Link>
+        </li>
+      </>
+      );
+    }
+  }
+
+  return (
+    <header className="header nes-container is-dark">
+      <div className="logo">
+        <Link type="button" className="nes-btn my" to="/">
+          MY:24
+        </Link>
+      </div>
+      <nav>
+        {showNavigation()}
+      </nav>
     </header>
   );
 }

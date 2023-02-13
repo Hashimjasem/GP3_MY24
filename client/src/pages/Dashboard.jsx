@@ -1,42 +1,26 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import TimeblockDisplay from '../components/timeblockDisplay'
-import Spinner from '../components/Spinner'
-
-// import {getTimeblocks, reset} from '../features/timeblocks/timeblockSlice'
-// import TimeblockForm from '../components/timeblockForm'
+import React from "react";
+import TimeBlockList from "../components/TimeblockList";
+import JournalDisplay from "../components/journalDisplay";
 
 function Dashboard() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const { user } = useSelector((state) => state.auth)
-  const {isLoading} = useSelector((state) => state.auth)
-
-  useEffect(() => {
-
-
-    if (!user) {
-      navigate('/login')
-    }
-
-  
-  }, [user, navigate, dispatch])
-
-  if (isLoading) {
-    return <Spinner />
-  }
-
-  
   return (
-    <>
-  <section className="content">
-    <p>Plan Your Day</p>
-  </section>
+    <div className="dashboard nes-container is-dark with-title ">
+      <h2 className="title">Dashboard</h2>
 
-  </>
-  )
+
+      <div className="dash-component">
+        <h2>Todays Timeblocks</h2>
+        <TimeBlockList />
+      </div>
+
+
+      <div className="dash-component">
+        <JournalDisplay />
+      </div>
+
+
+    </div>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

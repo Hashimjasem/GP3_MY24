@@ -1,29 +1,20 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import TimeBlockForm from "../components/timeblockForm";
-
+import "nes.css/css/nes.css";
+import TimeBlockForm from "../components/timeblockFrom";
+import TimeBlockList from "../components/TimeblockList";
 function Setup() {
-  const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
 
   return (
-  <>
-  <section className="content">
-    <p>Plan Your Day</p>
-    
-    
-  </section>
-  <TimeBlockForm/>
-  </>
-  )
-}
+<div className="dashboard nes-container is-dark with-title">
+      <h2 className="title">Plan a Day</h2>
+      <div className="dash-component">
+        <TimeBlockList />
+      </div>
+      <div className="dash-component form-group">
+        <TimeBlockForm />
+      </div>
+    </div>
+  );
+};
 
-export default Setup;
+export default Setup
